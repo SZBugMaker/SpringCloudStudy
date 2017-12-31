@@ -1,0 +1,93 @@
+#Spring Boot Config
+
+#内置tomcat端口
+server:
+  port: 8080
+
+#文件上传路径
+file-upload-path: E:/test
+
+#Spring全家桶配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///pori?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123
+  #redis集群(我本地的)
+    redis:
+      cluster:
+        nodes:
+            - 192.168.119.128:7001
+            - 192.168.119.128:7002
+            - 192.168.119.128:7003
+            - 192.168.119.128:7004
+            - 192.168.119.128:7005
+            - 192.168.119.128:7006
+  mail:
+      host: localhost
+      username: hello@huangle.com
+      password: 123
+  freemarker:
+        suffix: .html
+        request-context-attribute: request
+        charset: UTF-8
+  aop:
+      proxy-target-class: true
+  #热部署
+  devtools:
+        restart:
+          enabled: true
+          additional-paths: src/main/java
+  jmx:
+      enabled: false
+  http:
+        multipart:
+          max-file-size: 10MB
+          max-request-size: 10MB
+  application:
+    name: pori
+
+
+#MyBatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.szdl.pori.porigateway.entity
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    #key-generator: com.baomidou.springboot.xxx
+    #逻辑删除配置
+    #logic-delete-value: 0
+    #logic-not-delete-value: 1
+    #自定义填充策略接口实现公共字段
+    meta-object-handler: com.szdl.pori.porigateway.config.mybatisplus.MyMetaObjectHandler
+    #自定义SQL注入器
+    #sql-injector: com.baomidou.springboot.xxx
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+#logging
+logging:
+  level: debug
+
+#注册中心地址
+eureka:
+ client:
+  serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+
+
